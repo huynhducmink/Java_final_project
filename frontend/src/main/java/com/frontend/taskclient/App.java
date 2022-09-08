@@ -17,7 +17,9 @@ public class App {
         System.out.println(response.body());
       }
 
-    } catch (IOException | InterruptedException e) {
+    } catch (IOException e) {
+      e.printStackTrace();
+    } catch (InterruptedException e) {
       e.printStackTrace();
     }
   }
