@@ -26,19 +26,6 @@ import com.google.firebase.cloud.FirestoreClient;
 @Service
 public class FirebaseService {
 
-  // public Student getStudent(String id) throws ExecutionException, InterruptedException {
-  //   Firestore dbFirestore = FirestoreClient.getFirestore();
-  //   DocumentReference documentReference = dbFirestore.collection("students").document(id);
-  //   ApiFuture<DocumentSnapshot> future = documentReference.get();
-  //   DocumentSnapshot document = future.get();
-  //   Student student;
-  //   if(document.exists()){
-  //     student = document.toObject(Student.class);
-  //     return student;
-  //   }
-  //   return null;
-  // }
-
   public List<User> getAllUsers() throws ExecutionException, InterruptedException {
     Firestore dbFirestore = FirestoreClient.getFirestore();
     ApiFuture<QuerySnapshot> future = dbFirestore.collection("users").get();
