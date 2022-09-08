@@ -21,9 +21,6 @@ public class FirebaseController {
   }
 
   @GetMapping(path="/get")
-  // public Student getStudent(@RequestParam("id") String id) throws InterruptedException, ExecutionException {
-  //   return firebaseService.getStudent(id);
-  // }
   public List<User> getAllUsers() throws InterruptedException, ExecutionException {
     return firebaseService.getAllUsers();
   }

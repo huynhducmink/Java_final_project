@@ -26,6 +26,21 @@ import com.google.firebase.cloud.FirestoreClient;
 @Service
 public class FirebaseService {
 
+  @PostConstruct
+  public void initialization() throws IOException{
+
+    File file = ResourceUtils.getFile("classpath:serviceAccountKey.json");
+    FileInputStream serviceAccount = new FileInputStream(file);
+
+    FirebaseOptions options = FirebaseOptions.builder()
+        .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+        .setDatabaseUrl("https://testing-project-01.firebaseio.com/")
+        .build();
+
+    FirebaseApp.initializeApp(options);
+    System.out.println("Initialized connection with Firebase DB");
+  }
+
   public List<User> getAllUsers() throws ExecutionException, InterruptedException {
     Firestore dbFirestore = FirestoreClient.getFirestore();
     ApiFuture<QuerySnapshot> future = dbFirestore.collection("users").get();
@@ -51,18 +66,5 @@ public class FirebaseService {
     return user_list;
   }
 
-  @PostConstruct
-  public void initialization() throws IOException{
 
-    File file = ResourceUtils.getFile("classpath:serviceAccountKey.json");
-    FileInputStream serviceAccount = new FileInputStream(file);
-
-    FirebaseOptions options = FirebaseOptions.builder()
-        .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-        .setDatabaseUrl("https://testing-project-01.firebaseio.com/")
-        .build();
-
-    FirebaseApp.initializeApp(options);
-    System.out.println("Initialized connection with Firebase DB");
-  }
 }
