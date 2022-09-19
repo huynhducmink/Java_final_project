@@ -23,7 +23,6 @@ import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
-import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
@@ -71,24 +70,40 @@ public class FirebaseService {
     return user_list;
   }
 
-  public User getUser(String user_) throws ExecutionException, InterruptedException {
+  public User getUser(String user_id_) throws ExecutionException, InterruptedException {
     Firestore dbFirestore = FirestoreClient.getFirestore();
-    ApiFuture<DocumentSnapshot> future = dbFirestore.collection("users").document(user_).get();
+    ApiFuture<DocumentSnapshot> future = dbFirestore.collection("users").document(user_id_).get();
     DocumentSnapshot document = future.get();
     if (document.exists()) {
       User user = new User();
-      user.setUser_name(document.getString("name"));
+      user.setUser_name(document.getString("user_name"));
+      user.setUser_id(document.getString("user_id"));
       ApiFuture<QuerySnapshot> future2 = document.getReference().collection("tasks").get();
       List<QueryDocumentSnapshot> documents2 = future2.get().getDocuments();
       for (QueryDocumentSnapshot document2 : documents2) {
         if (document2.exists()) {
           Task task = new Task();
+          task.setTask_id(document2.getString("task_id"));
           task.setTask_name(document2.getString("task_name"));
           task.setTask_status(document2.getString("status"));
           user.getUser_task_list().add(task);
         }
       }
       return user;
+    }
+    return null;
+  }
+
+  public Task getTask(String user_id_, String task_id_) throws ExecutionException, InterruptedException {
+    Firestore dbFirestore = FirestoreClient.getFirestore();
+    ApiFuture<DocumentSnapshot> future = dbFirestore.collection("users").document(user_id_).collection("tasks").document(task_id_).get();
+    DocumentSnapshot document = future.get();
+    if (document.exists()) {
+      Task task = new Task();
+      task.setTask_id(document.getString("task_id"));
+      task.setTask_name(document.getString("task_name"));
+      task.setTask_status(document.getString("status"));
+      return task;
     }
     return null;
   }
@@ -109,8 +124,9 @@ public class FirebaseService {
     newTask.setTask_name("place_holder");
 
     Firestore dbFirestore = FirestoreClient.getFirestore();
-    ApiFuture<WriteResult> future = dbFirestore.collection("users").document(uuid_user).set(userdoc);
-    ApiFuture<WriteResult> future2 = dbFirestore.collection("users").document(uuid_user).collection("tasks").document(uuid_task).set(newTask);
+    // ApiFuture<WriteResult> future = 
+    dbFirestore.collection("users").document(uuid_user).set(userdoc);
+    dbFirestore.collection("users").document(uuid_user).collection("tasks").document(uuid_task).set(newTask);
     return null;
   }
 

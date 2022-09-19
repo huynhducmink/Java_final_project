@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.backend.taskserver.models.Task;
 import com.backend.taskserver.models.User;
 import com.backend.taskserver.services.FirebaseService;
 
@@ -23,14 +24,19 @@ public class FirebaseController {
     this.firebaseService = firebaseService;
   }
 
-  @GetMapping(path="/get_all_users_task")
+  @GetMapping(path="/get_all_users")
   public List<User> getAllUsers() throws InterruptedException, ExecutionException {
     return firebaseService.getAllUsers();
   }
 
-  @GetMapping(path="/get_user_task/{user}")
-  public User getAllUsers(@PathVariable String user) throws InterruptedException, ExecutionException {
-    return firebaseService.getUser(user);
+  @GetMapping(path="/get_user_task/{user_id}")
+  public User getUser(@PathVariable String user_id) throws InterruptedException, ExecutionException {
+    return firebaseService.getUser(user_id);
+  }
+
+  @GetMapping(path="/get_user_task/{user_id}/{task_id}")
+  public Task getTask(@PathVariable String user_id, @PathVariable String task_id) throws InterruptedException, ExecutionException {
+    return firebaseService.getTask(user_id,task_id);
   }
 
   @PutMapping(path="/create_new_user")
