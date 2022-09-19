@@ -10,7 +10,7 @@ import java.net.http.HttpResponse.BodyHandlers;
 public class App {
   public static void main(String[] args) throws IOException {
     HttpClient client = HttpClient.newHttpClient();
-    HttpRequest request = HttpRequest.newBuilder().uri(URI.create("http://localhost:8080/get")).build();
+    HttpRequest request = HttpRequest.newBuilder().uri(URI.create("http://localhost:8080/get/user_1")).build();
     try {
       HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
       if (response.statusCode() == 200) {

@@ -4,38 +4,64 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class User {
-  private String name;
-  private List<Task> task_list = new ArrayList<Task>();
+  private String user_id;
+  private String user_name;
+  private List<Task> user_task_list = new ArrayList<Task>();
 
   public User() {
   }
 
-  public User(String name, List<Task> task_list) {
-    this.name = name;
-    this.task_list = task_list;
+  public User(String user_id, String user_name, List<Task> user_task_list) {
+    this.user_id = user_id;
+    this.user_name = user_name;
+    this.user_task_list = user_task_list;
   }
 
-  public String getName() {
-    return this.name;
+  public String getUser_id() {
+    return this.user_id;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setUser_id(String user_id) {
+    this.user_id = user_id;
   }
 
-  public List<Task> getTask_list() {
-    return this.task_list;
+  public String getUser_name() {
+    return this.user_name;
   }
 
-  public void setTask_list(List<Task> task_list) {
-    this.task_list = task_list;
+  public void setUser_name(String user_name) {
+    this.user_name = user_name;
+  }
+
+  public List<Task> getUser_task_list() {
+    return this.user_task_list;
+  }
+
+  public void setUser_task_list(List<Task> user_task_list) {
+    this.user_task_list = user_task_list;
+  }
+
+  public User user_id(String user_id) {
+    setUser_id(user_id);
+    return this;
+  }
+
+  public User user_name(String user_name) {
+    setUser_name(user_name);
+    return this;
+  }
+
+  public User user_task_list(List<Task> user_task_list) {
+    setUser_task_list(user_task_list);
+    return this;
   }
 
   @Override
   public String toString() {
     return "{" +
-      " name='" + getName() + "'" +
-      ", task_list='" + getTask_list() + "'" +
+      " user_id='" + getUser_id() + "'" +
+      ", user_name='" + getUser_name() + "'" +
+      ", user_task_list='" + getUser_task_list() + "'" +
       "}";
   }
 
