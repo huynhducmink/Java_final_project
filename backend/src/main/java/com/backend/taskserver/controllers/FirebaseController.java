@@ -1,12 +1,14 @@
 package com.backend.taskserver.controllers;
 
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,7 +27,7 @@ public class FirebaseController {
   }
 
   @GetMapping(path="/get_all_users")
-  public List<User> getAllUsers() throws InterruptedException, ExecutionException {
+  public String getAllUsers() throws InterruptedException, ExecutionException {
     return firebaseService.getAllUsers();
   }
 
@@ -39,8 +41,13 @@ public class FirebaseController {
     return firebaseService.getTask(user_id,task_id);
   }
 
-  @PutMapping(path="/create_new_user")
-  public String createUser( @RequestParam String name) throws InterruptedException, ExecutionException {
-    return firebaseService.createUser(name);
+  @RequestMapping(path="/create_new_user", method = RequestMethod.PUT, consumes="application/json")
+  public String createUser( @RequestBody User user) throws InterruptedException, ExecutionException {
+    return firebaseService.createUser(user);
+  }
+
+  @PutMapping(path="/update_or_create_task")
+  public String updateOrCreateTask( @RequestParam String user_id, @RequestParam String task_id, @RequestParam String task_name, @RequestParam String task_status ) throws InterruptedException, ExecutionException {
+    return firebaseService.updateOrCreateTask(user_id,task_id,task_name,task_status);
   }
 }

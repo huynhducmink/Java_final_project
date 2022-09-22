@@ -26,6 +26,7 @@ import com.google.cloud.firestore.QuerySnapshot;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
+import com.google.gson.Gson;
 
 @Service
 public class FirebaseService {
@@ -45,7 +46,8 @@ public class FirebaseService {
     System.out.println("Initialized connection with Firebase DB");
   }
 
-  public List<User> getAllUsers() throws ExecutionException, InterruptedException {
+  public String getAllUsers() throws ExecutionException, InterruptedException {
+    Gson gson = new Gson();
     Firestore dbFirestore = FirestoreClient.getFirestore();
     ApiFuture<QuerySnapshot> future = dbFirestore.collection("users").get();
     List<QueryDocumentSnapshot> documents = future.get().getDocuments();
@@ -53,21 +55,23 @@ public class FirebaseService {
     for (QueryDocumentSnapshot document : documents) {
       if (document.exists()) {
         User user = new User();
-        user.setUser_name(document.getString("name"));
+        user.setUser_id(document.getString("user_id"));
+        user.setUser_name(document.getString("user_name"));
         ApiFuture<QuerySnapshot> future2 = document.getReference().collection("tasks").get();
         List<QueryDocumentSnapshot> documents2 = future2.get().getDocuments();
         for (QueryDocumentSnapshot document2 : documents2) {
           if (document2.exists()) {
             Task task = new Task();
+            task.setTask_id(document2.getString("task_id"));
             task.setTask_name(document2.getString("task_name"));
-            task.setTask_status(document2.getString("status"));
+            task.setTask_status(document2.getString("task_status"));
             user.getUser_task_list().add(task);
           }
         }
         user_list.add(user);
       }
     }
-    return user_list;
+    return gson.toJson(user_list);
   }
 
   public User getUser(String user_id_) throws ExecutionException, InterruptedException {
@@ -76,8 +80,8 @@ public class FirebaseService {
     DocumentSnapshot document = future.get();
     if (document.exists()) {
       User user = new User();
-      user.setUser_name(document.getString("user_name"));
       user.setUser_id(document.getString("user_id"));
+      user.setUser_name(document.getString("user_name"));
       ApiFuture<QuerySnapshot> future2 = document.getReference().collection("tasks").get();
       List<QueryDocumentSnapshot> documents2 = future2.get().getDocuments();
       for (QueryDocumentSnapshot document2 : documents2) {
@@ -85,7 +89,7 @@ public class FirebaseService {
           Task task = new Task();
           task.setTask_id(document2.getString("task_id"));
           task.setTask_name(document2.getString("task_name"));
-          task.setTask_status(document2.getString("status"));
+          task.setTask_status(document2.getString("task_status"));
           user.getUser_task_list().add(task);
         }
       }
@@ -102,16 +106,16 @@ public class FirebaseService {
       Task task = new Task();
       task.setTask_id(document.getString("task_id"));
       task.setTask_name(document.getString("task_name"));
-      task.setTask_status(document.getString("status"));
+      task.setTask_status(document.getString("task_status"));
       return task;
     }
     return null;
   }
 
-  public String createUser(String user_name_) throws ExecutionException, InterruptedException {
+  public String createUser(User user) throws ExecutionException, InterruptedException {
     User newUser = new User();
     String uuid_user = UUID.randomUUID().toString();
-    newUser.setUser_name(user_name_);
+    newUser.setUser_name(user.getUser_name());
     newUser.setUser_id(uuid_user);
 
     Map<String,String> userdoc = new HashMap<>();
@@ -128,6 +132,21 @@ public class FirebaseService {
     dbFirestore.collection("users").document(uuid_user).set(userdoc);
     dbFirestore.collection("users").document(uuid_user).collection("tasks").document(uuid_task).set(newTask);
     return null;
+  }
+
+  public String updateOrCreateTask(String user_id_, String task_id_, String task_name_, String task_status_) throws ExecutionException, InterruptedException {
+    Firestore dbFirestore = FirestoreClient.getFirestore();
+    ApiFuture<DocumentSnapshot> future = dbFirestore.collection("users").document(user_id_).get();
+    DocumentSnapshot document = future.get();
+    if (!document.exists()){
+      return "User not exist";
+    }
+    Task newTask = new Task();
+    newTask.setTask_id(task_id_);
+    newTask.setTask_name(task_name_);
+    newTask.setTask_status(task_status_);
+    dbFirestore.collection("users").document(user_id_).collection("tasks").document(task_id_).set(newTask);
+    return "Create/update task successfully";
   }
 
 }
