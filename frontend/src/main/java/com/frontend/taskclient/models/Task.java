@@ -55,11 +55,7 @@ public class Task {
 
   @Override
   public String toString() {
-    return "{" +
-      " task_id='" + getTask_id() + "'" +
-      ", task_name='" + getTask_name() + "'" +
-      ", task_status='" + getTask_status() + "'" +
-      "}";
+    return getTask_name() + "\n" + getTask_status();
   }
 
 }

@@ -58,11 +58,7 @@ public class User {
 
   @Override
   public String toString() {
-    return "{" +
-      " user_id='" + getUser_id() + "'" +
-      ", user_name='" + getUser_name() + "'" +
-      ", user_task_list='" + getUser_task_list() + "'" +
-      "}";
+    return getUser_name();
   }
 
 }

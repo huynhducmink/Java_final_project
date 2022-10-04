@@ -1,4 +1,4 @@
-package com.frontend.taskclient.lib;
+package com.frontend.taskclient.lib.httplib;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -51,10 +51,10 @@ public class HttpLib {
     try {
       HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
       if (response.statusCode() == 200) {
-        System.out.println(response.body());
         Type collectionType = new TypeToken<Collection<User>>(){}.getType();
         Collection<User> user_col = gson.fromJson(response.body(), collectionType);
         List<User> user_list = new ArrayList<User>(user_col);
+        System.out.println("Retreive data successfully!");
         return user_list;
       }
     } catch (IOException e) {

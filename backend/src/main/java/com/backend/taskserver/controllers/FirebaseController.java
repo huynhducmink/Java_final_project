@@ -26,7 +26,7 @@ public class FirebaseController {
     this.firebaseService = firebaseService;
   }
 
-  @GetMapping(path="/get_all_users")
+  @RequestMapping(path="/get_all_users", method = RequestMethod.GET, produces = "application/json")
   public String getAllUsers() throws InterruptedException, ExecutionException {
     return firebaseService.getAllUsers();
   }
@@ -41,7 +41,7 @@ public class FirebaseController {
     return firebaseService.getTask(user_id,task_id);
   }
 
-  @RequestMapping(path="/create_new_user", method = RequestMethod.PUT, consumes="application/json")
+  @RequestMapping(path="/create_new_user", method = RequestMethod.PUT, consumes = "application/json")
   public String createUser( @RequestBody User user) throws InterruptedException, ExecutionException {
     return firebaseService.createUser(user);
   }
