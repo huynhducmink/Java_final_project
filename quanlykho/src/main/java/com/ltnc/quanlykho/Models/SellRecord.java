@@ -8,19 +8,23 @@ public class SellRecord {
   private List<Good> good_list = new ArrayList<Good>();
   private User user;
   private Customer customer;
-  private String time;
-  private String status;
+  private String time_create;
+  private String time_deliver;
+  private String status; // create, delivering, reject
+  private String price;
 
   public SellRecord() {
   }
 
-  public SellRecord(String id, List<Good> good_list, User user, Customer customer, String time, String status) {
+  public SellRecord(String id, List<Good> good_list, User user, Customer customer, String time_create, String time_deliver, String status, String price) {
     this.id = id;
     this.good_list = good_list;
     this.user = user;
     this.customer = customer;
-    this.time = time;
+    this.time_create = time_create;
+    this.time_deliver = time_deliver;
     this.status = status;
+    this.price = price;
   }
 
   public String getId() {
@@ -55,12 +59,20 @@ public class SellRecord {
     this.customer = customer;
   }
 
-  public String getTime() {
-    return this.time;
+  public String getTime_create() {
+    return this.time_create;
   }
 
-  public void setTime(String time) {
-    this.time = time;
+  public void setTime_create(String time_create) {
+    this.time_create = time_create;
+  }
+
+  public String getTime_deliver() {
+    return this.time_deliver;
+  }
+
+  public void setTime_deliver(String time_deliver) {
+    this.time_deliver = time_deliver;
   }
 
   public String getStatus() {
@@ -69,6 +81,14 @@ public class SellRecord {
 
   public void setStatus(String status) {
     this.status = status;
+  }
+
+  public String getPrice() {
+    return this.price;
+  }
+
+  public void setPrice(String price) {
+    this.price = price;
   }
 
   public SellRecord id(String id) {
@@ -91,13 +111,23 @@ public class SellRecord {
     return this;
   }
 
-  public SellRecord time(String time) {
-    setTime(time);
+  public SellRecord time_create(String time_create) {
+    setTime_create(time_create);
+    return this;
+  }
+
+  public SellRecord time_deliver(String time_deliver) {
+    setTime_deliver(time_deliver);
     return this;
   }
 
   public SellRecord status(String status) {
     setStatus(status);
+    return this;
+  }
+
+  public SellRecord price(String price) {
+    setPrice(price);
     return this;
   }
 
@@ -108,8 +138,10 @@ public class SellRecord {
       ", good_list='" + getGood_list() + "'" +
       ", user='" + getUser() + "'" +
       ", customer='" + getCustomer() + "'" +
-      ", time='" + getTime() + "'" +
+      ", time_create='" + getTime_create() + "'" +
+      ", time_deliver='" + getTime_deliver() + "'" +
       ", status='" + getStatus() + "'" +
+      ", price='" + getPrice() + "'" +
       "}";
   }
 

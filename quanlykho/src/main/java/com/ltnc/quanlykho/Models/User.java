@@ -1,27 +1,19 @@
 package com.ltnc.quanlykho.Models;
 
 public class User {
-  private String name;
   private String id;
+  private String name;
   private String user_name;
   private String password;
 
   public User() {
   }
 
-  public User(String name, String id, String user_name, String password) {
-    this.name = name;
+  public User(String id, String name, String user_name, String password) {
     this.id = id;
+    this.name = name;
     this.user_name = user_name;
     this.password = password;
-  }
-
-  public String getName() {
-    return this.name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
   }
 
   public String getId() {
@@ -30,6 +22,14 @@ public class User {
 
   public void setId(String id) {
     this.id = id;
+  }
+
+  public String getName() {
+    return this.name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
   }
 
   public String getUser_name() {
@@ -48,13 +48,13 @@ public class User {
     this.password = password;
   }
 
-  public User name(String name) {
-    setName(name);
+  public User id(String id) {
+    setId(id);
     return this;
   }
 
-  public User id(String id) {
-    setId(id);
+  public User name(String name) {
+    setName(name);
     return this;
   }
 
@@ -71,8 +71,8 @@ public class User {
   @Override
   public String toString() {
     return "{" +
-      " name='" + getName() + "'" +
-      ", id='" + getId() + "'" +
+      " id='" + getId() + "'" +
+      ", name='" + getName() + "'" +
       ", user_name='" + getUser_name() + "'" +
       ", password='" + getPassword() + "'" +
       "}";
