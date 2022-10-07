@@ -24,8 +24,13 @@ public class Quanlykho {
       DatabaseConnect db = new DatabaseConnect();
       db.connect_to_database();
 
-      // Get customer list
       CustomerController customer_controller = new CustomerController();
+      // Add new customer
+      Customer newcustomer = new Customer("","customer_mink","012345678","hust");
+      customer_controller.createNewCustomer(newcustomer);
+
+
+      // Get customer list
       List<Customer> customer_list = customer_controller.getAllCustomers();
       for (Customer customer : customer_list) {
         System.out.println(customer.toString());

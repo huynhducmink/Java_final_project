@@ -1,7 +1,10 @@
 package com.ltnc.quanlykho.Controllers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 import com.google.api.core.ApiFuture;
@@ -28,6 +31,21 @@ public class CustomerController {
       }
     }
     return customer_list;
+  }
+
+  public void createNewCustomer(Customer newcustomer) throws ExecutionException, InterruptedException {
+    Customer customer = newcustomer;
+    String uuid_customer = UUID.randomUUID().toString();
+    customer.setId(uuid_customer);
+
+    Map<String,String> customerdoc = new HashMap<>();
+    customerdoc.put("id",customer.getId());
+    customerdoc.put("name",customer.getName());
+    customerdoc.put("phone",customer.getPhone());
+    customerdoc.put("address",customer.getAddress());
+
+    Firestore dbFirestore = FirestoreClient.getFirestore();
+    dbFirestore.collection("customers").document(uuid_customer).set(customerdoc);
   }
   
 }
