@@ -11,6 +11,7 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
+import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.cloud.FirestoreClient;
 import com.ltnc.quanlykho.Models.Customer;
 
@@ -37,6 +38,7 @@ public class CustomerController {
     Customer customer = newcustomer;
     String uuid_customer = UUID.randomUUID().toString();
     customer.setId(uuid_customer);
+    System.out.println(uuid_customer);
 
     Map<String,String> customerdoc = new HashMap<>();
     customerdoc.put("id",customer.getId());
@@ -45,7 +47,21 @@ public class CustomerController {
     customerdoc.put("address",customer.getAddress());
 
     Firestore dbFirestore = FirestoreClient.getFirestore();
-    dbFirestore.collection("customers").document(uuid_customer).set(customerdoc);
+    ApiFuture<WriteResult> future = dbFirestore.collection("customers").document(uuid_customer).set(customerdoc);
+    System.out.println("Update time : " + future.get().getUpdateTime());
+  }
+
+  public void editCustomerById(Customer newcustomer) throws ExecutionException, InterruptedException {
+    Map<String,String> customerdoc = new HashMap<>();
+    customerdoc.put("id",newcustomer.getId());
+    customerdoc.put("name",newcustomer.getName());
+    customerdoc.put("phone",newcustomer.getPhone());
+    customerdoc.put("address",newcustomer.getAddress());
+    System.out.println(newcustomer.getId());
+
+    Firestore dbFirestore = FirestoreClient.getFirestore();
+    ApiFuture<WriteResult> future = dbFirestore.collection("customers").document(newcustomer.getId()).set(customerdoc);
+    System.out.println("Update time : " + future.get().getUpdateTime());
   }
   
 }

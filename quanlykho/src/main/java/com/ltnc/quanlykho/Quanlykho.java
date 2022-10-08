@@ -5,51 +5,40 @@
 
 package com.ltnc.quanlykho;
 
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import com.ltnc.quanlykho.Controllers.CustomerController;
-import com.ltnc.quanlykho.Controllers.UserController;
 import com.ltnc.quanlykho.Database.DatabaseConnect;
 import com.ltnc.quanlykho.Models.Customer;
-import com.ltnc.quanlykho.Models.User;
 
 /**
  *
  * @author huynhmink
  */
 public class Quanlykho {
-    public static void main(String[] args) throws ExecutionException, InterruptedException {
-      // Leave this in main to create connect to the database
-      DatabaseConnect db = new DatabaseConnect();
-      db.connect_to_database();
+  public static void main(String[] args) throws ExecutionException, InterruptedException {
+    // Leave this in main to create connect to the database
+    DatabaseConnect db = new DatabaseConnect();
+    db.connect_to_database();
 
-      CustomerController customer_controller = new CustomerController();
-      // Add new customer
-      Customer newcustomer = new Customer("","customer_mink","012345678","hust");
-      customer_controller.createNewCustomer(newcustomer);
+    // Login lg = new Login();
+    // lg.setVisible(true);
 
+    CustomerController customer_controller = new CustomerController();
+    // Customer customer = new
+    // Customer("178dc6f9-1f8d-4021-a35f-39e221c94e28","customer_new_name","0","0");
+    // customer_controller.editCustomerById(customer);
 
-      // Get customer list
-      List<Customer> customer_list = customer_controller.getAllCustomers();
-      for (Customer customer : customer_list) {
-        System.out.println(customer.toString());
-      }
+    // // Add new customer
+    Customer newcustomer = new Customer("", "customer_mink_2", "012345678", "hust");
+    customer_controller.createNewCustomer(newcustomer);
 
-      // Get user list
-      UserController user_controller = new UserController();
-      List<User> user_list = user_controller.getAllUsers();
-      for (User user : user_list) {
-        System.out.println(user.toString());
-      }
+    // Get customer list
+    // List<Customer> customer_list = customer_controller.getAllCustomers();
+    // for (Customer customer : customer_list) {
+    //   System.out.println(customer.toString());
+    // }
 
-      // Login
-      Boolean allow_login = user_controller.login("huynhmink","12345678");
-      if (allow_login){
-        System.out.println("Login successfully!");
-      }
-      else {
-        System.out.println("Incorrect username or password");
-      }
-    }
+    return;
+  }
 }
