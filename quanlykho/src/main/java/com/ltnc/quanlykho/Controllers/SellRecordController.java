@@ -111,4 +111,39 @@ public class SellRecordController {
       System.out.println("Update time : " + future3.get().getUpdateTime());
     }
   }
+
+  public void rejectSellRecord(String id) throws ExecutionException, InterruptedException {
+    Firestore dbFirestore = FirestoreClient.getFirestore();
+    ApiFuture<DocumentSnapshot> future = dbFirestore.collection("sell_records_pending").document(id).get();
+    DocumentSnapshot document = future.get();
+    if (document.exists()) {
+      SellRecord sellrecord = new SellRecord();
+      sellrecord.setId(document.getString("id"));
+
+      List<Good> good_list = new ArrayList<Good>();
+      List<Map<String,Object>> good_listmap = (List<Map<String, Object>>) document.get("good_list");
+      for (Map<String, Object> good_map : good_listmap) {
+        Good good = new Good();
+        good.setId((String)good_map.get("id"));
+        good.setName((String)good_map.get("name"));
+        good.setQuantity(((Long) good_map.get("quantity")).intValue());
+        good_list.add(good);
+      }
+      sellrecord.setGood_list(good_list);
+
+      sellrecord.setUser(document.get("user",User.class));
+      sellrecord.setCustomer(document.get("customer",Customer.class));
+      sellrecord.setTime(document.getString("time"));
+      sellrecord.setStatus(document.getString("status"));
+      sellrecord.setPrice(document.getString("price"));
+
+      // move sell record to done 
+      sellrecord.setStatus("reject");
+      ApiFuture<WriteResult> future2 = dbFirestore.collection("sell_records_done").document(sellrecord.getId()).set(sellrecord);
+      System.out.println("Update time : " + future2.get().getUpdateTime());
+
+      ApiFuture<WriteResult> future3 = dbFirestore.collection("sell_records_pending").document(sellrecord.getId()).delete();
+      System.out.println("Update time : " + future3.get().getUpdateTime());
+    }
+  }
 }

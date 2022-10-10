@@ -8,6 +8,7 @@ import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
@@ -34,6 +35,20 @@ public class CustomerController {
     return customer_list;
   }
 
+  public Customer getCustomerById(String id) throws ExecutionException, InterruptedException {
+    Firestore dbFirestore = FirestoreClient.getFirestore();
+    ApiFuture<DocumentSnapshot> future = dbFirestore.collection("customers").document(id).get();
+    DocumentSnapshot document = future.get();
+    Customer customer = new Customer();
+    if (document.exists()) {
+      customer.setId(document.getString("id"));
+      customer.setName(document.getString("name"));
+      customer.setPhone(document.getString("phone"));
+      customer.setAddress(document.getString("address"));
+    }
+    return customer;
+  }
+
   public void createNewCustomer(Customer newcustomer) throws ExecutionException, InterruptedException {
     Customer customer = newcustomer;
     String uuid_customer = UUID.randomUUID().toString();
@@ -51,7 +66,7 @@ public class CustomerController {
     System.out.println("Update time : " + future.get().getUpdateTime());
   }
 
-  public void editCustomerById(Customer newcustomer) throws ExecutionException, InterruptedException {
+  public void editCustomer(Customer newcustomer) throws ExecutionException, InterruptedException {
     Map<String,String> customerdoc = new HashMap<>();
     customerdoc.put("id",newcustomer.getId());
     customerdoc.put("name",newcustomer.getName());
@@ -63,5 +78,17 @@ public class CustomerController {
     ApiFuture<WriteResult> future = dbFirestore.collection("customers").document(newcustomer.getId()).set(customerdoc);
     System.out.println("Update time : " + future.get().getUpdateTime());
   }
-  
+
+  public void deleteCustomer(Customer newcustomer) throws ExecutionException, InterruptedException {
+    Map<String,String> customerdoc = new HashMap<>();
+    customerdoc.put("id",newcustomer.getId());
+    customerdoc.put("name",newcustomer.getName());
+    customerdoc.put("phone",newcustomer.getPhone());
+    customerdoc.put("address",newcustomer.getAddress());
+    System.out.println(newcustomer.getId());
+
+    Firestore dbFirestore = FirestoreClient.getFirestore();
+    ApiFuture<WriteResult> future = dbFirestore.collection("customers").document(newcustomer.getId()).delete();
+    System.out.println("Update time : " + future.get().getUpdateTime());
+  }
 }

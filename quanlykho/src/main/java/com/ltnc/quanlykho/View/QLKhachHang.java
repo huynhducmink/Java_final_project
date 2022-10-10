@@ -7,6 +7,7 @@ package com.ltnc.quanlykho.View;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import com.ltnc.quanlykho.Controllers.CustomerController;
@@ -14,17 +15,18 @@ import com.ltnc.quanlykho.Models.Customer;
 
 /**
  *
- * @author KH
+ * @author HM
  */
 public class QLKhachHang extends javax.swing.JFrame {
 
     /**
-     * Creates new form QLNhanVien
+     * Creates new form QLKhachHang
      */
     private CustomerController customer_controller = new CustomerController();
-    private List<Customer> list;
+    private List<Customer> customer_list;
     private DefaultTableModel model;
     private int index;
+    private Customer selected_customer = new Customer();
 
     public QLKhachHang() {
         initComponents();
@@ -126,13 +128,13 @@ public class QLKhachHang extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnRefresh)
+                .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnRefresh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -285,11 +287,11 @@ public class QLKhachHang extends javax.swing.JFrame {
     private void renderList() {
       model.setRowCount(0);
       try {
-        list = customer_controller.getAllCustomers();
+        customer_list = customer_controller.getAllCustomers();
       } catch (ExecutionException | InterruptedException e) {
         System.out.println("error");
       }
-      for (Customer customer : list) {
+      for (Customer customer : customer_list) {
 
         model.addRow(new Object[] {
             tableResult.getRowCount() + 1,
@@ -301,75 +303,51 @@ public class QLKhachHang extends javax.swing.JFrame {
     }
 
     private void reset() {
-        txtTenKhachHang.setText("");
-        txtSDT.setText("");
-        txtDiaChi.setText("");
-        txtSearch.setText("");
-        renderList();
+      selected_customer = new Customer();
+      txtTenKhachHang.setText("");
+      txtSDT.setText("");
+      txtDiaChi.setText("");
+      txtSearch.setText("");
+      renderList();
     }
 
     private void tableResultClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableResultClick
         // TODO add your handling code here:
-        // index = tableResult.getSelectedRow();
-        // KhachHang kh = list.get(index);
+        index = tableResult.getSelectedRow();
+        Customer customer = customer_list.get(index);
+        selected_customer = customer;
 
-        // txtTenKhachHang.setText(kh.getTenKhachHang());
-//        String date = null;
-//            if (txtNgaySinh.getDate() != null) {
-//                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-//                date = simpleDateFormat.format(txtNgaySinh.getDate());
-//            }
-//            txtNgaySinh.setDate(date);
-//        Date date;
-//        if (!(new Check().isNullOrEmpty(kh.getNgayDat()))) {
-//            try {
-//                date = new SimpleDateFormat("dd/MM/yyyy").parse(kh.getNgayDat());
-//                txtNgayDat.setDate(date);
-//            } catch (ParseException ex) {
-//                Logger.getLogger(QLKhachHang.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-//        Date date2;
-//        if (!(new Check().isNullOrEmpty(kh.getNgayGiao()))) {
-//            try {
-//                date2 = new SimpleDateFormat("dd/MM/yyyy").parse(kh.getNgayGiao());
-//                txtNgayGiao.setDate(date2);
-//            } catch (ParseException ex) {
-//                Logger.getLogger(QLKhachHang.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-        
-        
-        // txtMaSanPham.setText(kh.getMaSanPham());
-        // txtSDT.setText(kh.getSDT());
-        // txtDiaChi.setText(kh.getDiaChi());
-
+        txtTenKhachHang.setText(customer.getName());
+        txtSDT.setText(customer.getPhone());
+        txtDiaChi.setText(customer.getAddress());
         
     }//GEN-LAST:event_tableResultClick
 
-    private void search(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search
-        // // TODO add your handling code here:
-        // String kyTu = txtSearch.getText();
+    private void search(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_search
+      // // TODO add your handling code here:
+      String find_text = txtSearch.getText();
 
-        // if (!(kyTu.isBlank())) {
-        //     list = new KhachHangController().findByChar(kyTu);
-        //     model.setRowCount(0);
-        //     for (KhachHang kh : list) {
-        //         model.addRow(new Object[]{
-        //             tableResult.getRowCount() + 1,
-        //             kh.getTenKhachHang(),
-        //             kh.getNgayDat(),
-        //             kh.getNgayGiao(),
-        //             kh.getMaSanPham(),
-        //             kh.getDonGia(),
-        //             kh.getDiaChi(),
-        //             kh.getSDT(),
-        //             kh.getEmail()
-        //         });
-        //     }
-        // } else {
-        //     JOptionPane.showMessageDialog(this, "Hãy nhập thông tin cần tìm kiếm!", "Lỗi", JOptionPane.INFORMATION_MESSAGE);
-        // }
+      if (!(find_text.isBlank())) {
+        model.setRowCount(0);
+        try {
+          customer_list = customer_controller.getAllCustomers();
+        } catch (ExecutionException | InterruptedException e) {
+          System.out.println("error");
+        }
+        for (Customer customer : customer_list) {
+          if (customer.getName().contains(find_text)||customer.getPhone().contains(find_text)||customer.getAddress().contains(find_text)){
+            model.addRow(new Object[] {
+                tableResult.getRowCount() + 1,
+                customer.getName(),
+                customer.getPhone(),
+                customer.getAddress()
+            });
+          }
+        }
+      } else {
+        JOptionPane.showMessageDialog(this, "Hãy nhập thông tin cần tìm kiếm!", "Lỗi",
+            JOptionPane.INFORMATION_MESSAGE);
+      }
     }//GEN-LAST:event_search
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -386,91 +364,67 @@ public class QLKhachHang extends javax.swing.JFrame {
 
     private void edit(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edit
 //         // TODO add your handling code here:
-//         index = tableResult.getSelectedRow();
-//         if (list.isEmpty()) {
-//             JOptionPane.showMessageDialog(this, "Danh sách thành viên rỗng!", "Lỗi", JOptionPane.INFORMATION_MESSAGE);
-//         } else if (index == -1) {
-//             JOptionPane.showMessageDialog(this, "Hãy chọn thành viên mà bạn cần chỉnh sửa!", "Lỗi", JOptionPane.INFORMATION_MESSAGE);
-//         } else {
-//             var check = new Check();
-//             if (check.isNullOrEmpty(txtTenKhachHang.getText()) || check.isNullOrEmpty(txtMaSanPham.getText()) || check.isNullOrEmpty(txtSDT.getText())) {
-//                 JOptionPane.showMessageDialog(this, "Cần nhập đầy đủ các thông tin cần thiết!", "Lỗi", JOptionPane.WARNING_MESSAGE);
-//             }
-//             KhachHang kh = list.get(index);
-
-//             String date = null;
-
-// //            if (txtNgayDat.getDate() != null) {
-// //                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-// //                date = simpleDateFormat.format(txtNgayDat.getDate());
-// //            }
-// //            String date2 = null;
-// //            if (txtNgayGiao.getDate() != null) {
-// //                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-// //                date2 = simpleDateFormat.format(txtNgayGiao.getDate());
-// //            }
-
-//             kh.setTenKhachHang(txtTenKhachHang.getText());
-//             kh.setNgayDat(date);
-// //            kh.setNgayGiao(date2);
-
-//             kh.setMaSanPham(txtMaSanPham.getText());
-//             kh.setDiaChi(txtDiaChi.getText());
-
-//             if (check.isDigit(txtSDT.getText())) {
-//                 kh.setSDT(txtSDT.getText());
-//                 new KhachHangController().update(kh);
-//                 JOptionPane.showMessageDialog(this, "Sửa thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
-//                 reset();
-//             } else {
-//                 JOptionPane.showMessageDialog(this, "SĐT phải là số!", "Lỗi", JOptionPane.WARNING_MESSAGE);
-//             }
-//         }
+      if (selected_customer.getId()==null){
+        JOptionPane.showMessageDialog(this, "Hãy chọn khách hàng mà bạn cần chỉnh sửa!", "Lỗi", JOptionPane.INFORMATION_MESSAGE);
+      }
+      else{
+        Customer customer = new Customer();
+        customer = selected_customer;
+        customer.setName(txtTenKhachHang.getText());
+        customer.setAddress(txtDiaChi.getText());
+        customer.setPhone(txtSDT.getText());
+        CustomerController customer_controller = new CustomerController();
+        try {
+          customer_controller.editCustomer(customer);
+        } catch (ExecutionException | InterruptedException e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+        }
+      reset();
+      }
     }//GEN-LAST:event_edit
 
     private void delete(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete
         // // TODO add your handling code here:
-        // index = tableResult.getSelectedRow();
-        // if (list.isEmpty()) {
-        //     JOptionPane.showMessageDialog(this, "Danh sách thành viên rỗng!", "Lỗi", JOptionPane.INFORMATION_MESSAGE);
-        // } else if (index == -1) {
-        //     JOptionPane.showMessageDialog(this, "Hãy chọn thành viên mà bạn cần xóa!", "Lỗi", JOptionPane.INFORMATION_MESSAGE);
-        // } else {
-        //     KhachHang kh = list.get(index);
-        //     JOptionPane.showMessageDialog(this, "Xóa thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
-        //     new KhachHangController().delete(kh.getID());
-        //     reset();
-        // }
+      if (selected_customer.getId()==null){
+        JOptionPane.showMessageDialog(this, "Hãy chọn khách hàng mà bạn cần xóa!", "Lỗi", JOptionPane.INFORMATION_MESSAGE);
+      }
+      else{
+        Customer customer = new Customer();
+        customer = selected_customer;
+        customer.setName(txtTenKhachHang.getText());
+        customer.setAddress(txtDiaChi.getText());
+        customer.setPhone(txtSDT.getText());
+        CustomerController customer_controller = new CustomerController();
+        try {
+          customer_controller.deleteCustomer(customer);
+        } catch (ExecutionException | InterruptedException e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+        }
+      reset();
+      }
     }//GEN-LAST:event_delete
 
     private void add(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add
-//         // TODO add your handling code here:
-//         var check = new Check();
-//         if (check.isNullOrEmpty(txtTenKhachHang.getText()) || check.isNullOrEmpty(txtMaSanPham.getText()) || check.isNullOrEmpty(txtSDT.getText())) {
-//             JOptionPane.showMessageDialog(this, "Cần nhập đầy đủ các thông tin cần thiết!", "Lỗi", JOptionPane.WARNING_MESSAGE);
-//         } else {
-//             KhachHang kh = new KhachHang();
-
-//             String date = null;
-// //            if (txtNgayDat.getDate() != null) {
-// //                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-// //                date = simpleDateFormat.format(txtNgayDat.getDate());
-// //            }
-//             kh.setTenKhachHang(txtTenKhachHang.getText());
-//             kh.setNgayDat(date);
-//             kh.setNgayGiao(date);
-//             kh.setMaSanPham(txtMaSanPham.getText());
-// //            kh.setDonGia(txtDonGia.getText());
-//             kh.setDiaChi(txtDiaChi.getText());
-//             if (check.isDigit(txtSDT.getText())) {
-//                 kh.setSDT(txtSDT.getText());
-//                 new KhachHangController().add(kh);
-//                 JOptionPane.showMessageDialog(this, "Thêm mới thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
-//                 reset();
-//             } else {
-//                 JOptionPane.showMessageDialog(this, "SĐT phải là số!", "Lỗi", JOptionPane.WARNING_MESSAGE);
-//             }
-//         }
+      // TODO add your handling code here:
+      if (selected_customer.getId()!=null){
+        JOptionPane.showMessageDialog(this, "Bạn đang chọn một khách hàng rồi, bấm Refresh sau đó nhập lại thông tin mới!", "Lỗi", JOptionPane.INFORMATION_MESSAGE);
+      }
+      else{
+        Customer customer = new Customer();
+        customer.setName(txtTenKhachHang.getText());
+        customer.setAddress(txtDiaChi.getText());
+        customer.setPhone(txtSDT.getText());
+        CustomerController customer_controller = new CustomerController();
+        try {
+          customer_controller.createNewCustomer(customer);
+        } catch (ExecutionException | InterruptedException e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+        }
+      reset();
+      }
     }//GEN-LAST:event_add
 
     private void txtTenKhachHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTenKhachHangActionPerformed

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
@@ -31,12 +32,25 @@ public class UserController {
     return user_list;
   }
 
+  public User getUserById(String id) throws ExecutionException, InterruptedException {
+    Firestore dbFirestore = FirestoreClient.getFirestore();
+    ApiFuture<DocumentSnapshot> future = dbFirestore.collection("users").document(id).get();
+    DocumentSnapshot document = future.get();
+    User user = new User();
+    if (document.exists()) {
+      user.setId(document.getString("id"));
+      user.setName(document.getString("name"));
+    }
+    return user;
+  }
+
   public Boolean login(String user_name, String password ) throws ExecutionException, InterruptedException {
     List<User> user_list = this.getAllUsers();
     Boolean allow_login = false;
     for (User user : user_list){
       if (user.getUser_name().equals(user_name) && user.getPassword().equals(password)){
         allow_login = true;
+        Global.current_user = user;
       }
     }
     return allow_login;

@@ -7,8 +7,8 @@ package com.ltnc.quanlykho;
 
 import java.util.concurrent.ExecutionException;
 
-import com.ltnc.quanlykho.Controllers.SellRecordController;
 import com.ltnc.quanlykho.Database.DatabaseConnect;
+import com.ltnc.quanlykho.View.Login;
 
 /**
  *
@@ -16,12 +16,13 @@ import com.ltnc.quanlykho.Database.DatabaseConnect;
  */
 public class Quanlykho {
   public static void main(String[] args) throws ExecutionException, InterruptedException {
+
     // Leave this in main to create connect to the database
     DatabaseConnect db = new DatabaseConnect();
     db.connect_to_database();
 
-    // Login lg = new Login();
-    // lg.setVisible(true);
+    Login lg = new Login();
+    lg.setVisible(true);
 
     // CustomerController customer_controller = new CustomerController();
 
@@ -66,7 +67,7 @@ public class Quanlykho {
     // good_controller.createNewGood(good);
     // good_controller.increaseGoodQuantityById("8bbf6a22-a817-41ea-b28c-7e3a145d4f0d", 10);
 
-    SellRecordController sellrecord_controller = new SellRecordController();
+    // SellRecordController sellrecord_controller = new SellRecordController();
     // Good good = new Good("8bbf6a22-a817-41ea-b28c-7e3a145d4f0d","apple",1);
     // List <Good> good_list = new ArrayList<Good> ();
     // good_list.add(good);
@@ -74,7 +75,7 @@ public class Quanlykho {
     // Customer customer = new Customer("", "customer_mink_2", "012345678", "hust");
     // SellRecord sellrecord = new SellRecord("",good_list,user,customer,"1","","1");
     // sellrecord_controller.createNewSellRecord(sellrecord);
-    sellrecord_controller.doneSellRecord("def68b77-4209-4d45-a6a4-a66aedc6c560");
+    // sellrecord_controller.rejectSellRecord("d3e8fb75-dff0-461f-99ba-eefa0328544f");
 
     return;
   }

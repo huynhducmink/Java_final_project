@@ -160,7 +160,6 @@ public class Login extends javax.swing.JFrame {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) throws HeadlessException, ExecutionException, InterruptedException {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
-        // if (txtUser.getText().equals("Dung") && txtpass.getText().equals("1")) {
           UserController user_controller = new UserController();
           System.out.println(txtUser.getText());
           System.out.println(txtpass.getText());
@@ -170,7 +169,7 @@ public class Login extends javax.swing.JFrame {
             Home home = new Home();
             home.setVisible(true);
             // JOptionPane.showMessageDialog(this, "Đăng nhập thành công");
-        } else if (txtUser.getText().isBlank() || txtpass.getPassword().toString().isBlank()) {
+        } else if (txtUser.getText().isBlank() || txtpass.getText().isBlank()) {
             //Tạo một JOptionPane với một thông điệp kiểm tra (test message)
             JOptionPane.showMessageDialog(this, "Tài khoản hoặc mật khẩu chưa nhập");
         } else {
