@@ -3,12 +3,12 @@ package com.ltnc.quanlykho.Models;
 public class Good {
   private String id;
   private String name;
-  private String quantity;
+  private Integer quantity;
 
   public Good() {
   }
 
-  public Good(String id, String name, String quantity) {
+  public Good(String id, String name, Integer quantity) {
     this.id = id;
     this.name = name;
     this.quantity = quantity;
@@ -30,11 +30,11 @@ public class Good {
     this.name = name;
   }
 
-  public String getQuantity() {
+  public Integer getQuantity() {
     return this.quantity;
   }
 
-  public void setQuantity(String quantity) {
+  public void setQuantity(Integer quantity) {
     this.quantity = quantity;
   }
 
@@ -48,7 +48,7 @@ public class Good {
     return this;
   }
 
-  public Good quantity(String quantity) {
+  public Good quantity(Integer quantity) {
     setQuantity(quantity);
     return this;
   }

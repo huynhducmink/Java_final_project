@@ -8,21 +8,19 @@ public class SellRecord {
   private List<Good> good_list = new ArrayList<Good>();
   private User user;
   private Customer customer;
-  private String time_create;
-  private String time_deliver;
+  private String time;
   private String status; // create, delivering, reject
   private String price;
 
   public SellRecord() {
   }
 
-  public SellRecord(String id, List<Good> good_list, User user, Customer customer, String time_create, String time_deliver, String status, String price) {
+  public SellRecord(String id, List<Good> good_list, User user, Customer customer, String time, String status, String price) {
     this.id = id;
     this.good_list = good_list;
     this.user = user;
     this.customer = customer;
-    this.time_create = time_create;
-    this.time_deliver = time_deliver;
+    this.time = time;
     this.status = status;
     this.price = price;
   }
@@ -59,20 +57,12 @@ public class SellRecord {
     this.customer = customer;
   }
 
-  public String getTime_create() {
-    return this.time_create;
+  public String getTime() {
+    return this.time;
   }
 
-  public void setTime_create(String time_create) {
-    this.time_create = time_create;
-  }
-
-  public String getTime_deliver() {
-    return this.time_deliver;
-  }
-
-  public void setTime_deliver(String time_deliver) {
-    this.time_deliver = time_deliver;
+  public void setTime(String time) {
+    this.time = time;
   }
 
   public String getStatus() {
@@ -111,13 +101,8 @@ public class SellRecord {
     return this;
   }
 
-  public SellRecord time_create(String time_create) {
-    setTime_create(time_create);
-    return this;
-  }
-
-  public SellRecord time_deliver(String time_deliver) {
-    setTime_deliver(time_deliver);
+  public SellRecord time(String time) {
+    setTime(time);
     return this;
   }
 
@@ -138,8 +123,7 @@ public class SellRecord {
       ", good_list='" + getGood_list() + "'" +
       ", user='" + getUser() + "'" +
       ", customer='" + getCustomer() + "'" +
-      ", time_create='" + getTime_create() + "'" +
-      ", time_deliver='" + getTime_deliver() + "'" +
+      ", time='" + getTime() + "'" +
       ", status='" + getStatus() + "'" +
       ", price='" + getPrice() + "'" +
       "}";
