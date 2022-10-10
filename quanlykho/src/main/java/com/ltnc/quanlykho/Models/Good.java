@@ -2,16 +2,20 @@ package com.ltnc.quanlykho.Models;
 
 public class Good {
   private String id;
+  private String shop_id;
   private String name;
   private Integer quantity;
+  private Integer price;
 
   public Good() {
   }
 
-  public Good(String id, String name, Integer quantity) {
+  public Good(String id, String shop_id, String name, Integer quantity, Integer price) {
     this.id = id;
+    this.shop_id = shop_id;
     this.name = name;
     this.quantity = quantity;
+    this.price = price;
   }
 
   public String getId() {
@@ -20,6 +24,14 @@ public class Good {
 
   public void setId(String id) {
     this.id = id;
+  }
+
+  public String getShop_id() {
+    return this.shop_id;
+  }
+
+  public void setShop_id(String shop_id) {
+    this.shop_id = shop_id;
   }
 
   public String getName() {
@@ -38,8 +50,21 @@ public class Good {
     this.quantity = quantity;
   }
 
+  public Integer getPrice() {
+    return this.price;
+  }
+
+  public void setPrice(Integer price) {
+    this.price = price;
+  }
+
   public Good id(String id) {
     setId(id);
+    return this;
+  }
+
+  public Good shop_id(String shop_id) {
+    setShop_id(shop_id);
     return this;
   }
 
@@ -53,12 +78,19 @@ public class Good {
     return this;
   }
 
+  public Good price(Integer price) {
+    setPrice(price);
+    return this;
+  }
+
   @Override
   public String toString() {
     return "{" +
       " id='" + getId() + "'" +
+      ", shop_id='" + getShop_id() + "'" +
       ", name='" + getName() + "'" +
       ", quantity='" + getQuantity() + "'" +
+      ", price='" + getPrice() + "'" +
       "}";
   }
 

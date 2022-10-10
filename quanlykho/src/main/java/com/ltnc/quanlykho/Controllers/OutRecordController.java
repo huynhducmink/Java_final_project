@@ -25,10 +25,9 @@ public class OutRecordController {
       if (document.exists()) {
         OutRecord outrecord = new OutRecord();
         outrecord.setId(document.getString("id"));
-        outrecord.setGood_list((List<Good>)document.get("good_list"));
+        outrecord.setGood(document.get("good",Good.class));
         outrecord.setUser(document.get("user",User.class));
         outrecord.setTime(document.getString("time"));
-        outrecord.setStatus(document.getString("status"));
         outrecord_list.add(outrecord);
       }
     }
@@ -42,9 +41,7 @@ public class OutRecordController {
     Firestore dbFirestore = FirestoreClient.getFirestore();
     ApiFuture<WriteResult> future = dbFirestore.collection("out_records").document(uuid_outrecord).set(outrecord);
     System.out.println("Update time : " + future.get().getUpdateTime());
-    for (Good good : outrecord.getGood_list()){
-      GoodController good_controller = new GoodController();
-      good_controller.decreaseGoodQuantityById(good.getId(), good.getQuantity());
-    }
+    GoodController good_controller = new GoodController();
+    good_controller.decreaseGoodQuantityById(outrecord.getGood().getId(), outrecord.getGood().getQuantity());
   }
 }

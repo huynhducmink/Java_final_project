@@ -28,7 +28,18 @@ public class SellRecordController {
       if (document.exists()) {
         SellRecord sellrecorddone = new SellRecord();
         sellrecorddone.setId(document.getString("id"));
-        sellrecorddone.setGood_list((List<Good>)document.get("good_list"));
+        List<Good> good_list = new ArrayList<Good>();
+        List<Map<String, Object>> good_listmap = (List<Map<String, Object>>) document.get("good_list");
+        for (Map<String, Object> good_map : good_listmap) {
+          Good good = new Good();
+          good.setId((String) good_map.get("id"));
+          good.setShop_id((String) good_map.get("shop_id"));
+          good.setName((String) good_map.get("name"));
+          good.setQuantity(((Long) good_map.get("quantity")).intValue());
+          good.setPrice(((Long) good_map.get("price")).intValue());
+          good_list.add(good);
+        }
+        sellrecorddone.setGood_list(good_list);
         sellrecorddone.setUser(document.get("user",User.class));
         sellrecorddone.setCustomer(document.get("customer",Customer.class));
         sellrecorddone.setTime(document.getString("time"));
@@ -49,7 +60,18 @@ public class SellRecordController {
       if (document.exists()) {
         SellRecord sellrecordpending = new SellRecord();
         sellrecordpending.setId(document.getString("id"));
-        sellrecordpending.setGood_list((List<Good>)document.get("good_list"));
+        List<Good> good_list = new ArrayList<Good>();
+        List<Map<String, Object>> good_listmap = (List<Map<String, Object>>) document.get("good_list");
+        for (Map<String, Object> good_map : good_listmap) {
+          Good good = new Good();
+          good.setId((String) good_map.get("id"));
+          good.setShop_id((String) good_map.get("shop_id"));
+          good.setName((String) good_map.get("name"));
+          good.setQuantity(((Long) good_map.get("quantity")).intValue());
+          good.setPrice(((Long) good_map.get("price")).intValue());
+          good_list.add(good);
+        }
+        sellrecordpending.setGood_list(good_list);
         sellrecordpending.setUser(document.get("user",User.class));
         sellrecordpending.setCustomer(document.get("customer",Customer.class));
         sellrecordpending.setTime(document.getString("time"));
@@ -83,9 +105,11 @@ public class SellRecordController {
       List<Map<String,Object>> good_listmap = (List<Map<String, Object>>) document.get("good_list");
       for (Map<String, Object> good_map : good_listmap) {
         Good good = new Good();
-        good.setId((String)good_map.get("id"));
-        good.setName((String)good_map.get("name"));
+        good.setId((String) good_map.get("id"));
+        good.setShop_id((String) good_map.get("shop_id"));
+        good.setName((String) good_map.get("name"));
         good.setQuantity(((Long) good_map.get("quantity")).intValue());
+        good.setPrice(((Long) good_map.get("price")).intValue());
         good_list.add(good);
       }
       sellrecord.setGood_list(good_list);
@@ -124,9 +148,11 @@ public class SellRecordController {
       List<Map<String,Object>> good_listmap = (List<Map<String, Object>>) document.get("good_list");
       for (Map<String, Object> good_map : good_listmap) {
         Good good = new Good();
-        good.setId((String)good_map.get("id"));
-        good.setName((String)good_map.get("name"));
+        good.setId((String) good_map.get("id"));
+        good.setShop_id((String) good_map.get("shop_id"));
+        good.setName((String) good_map.get("name"));
         good.setQuantity(((Long) good_map.get("quantity")).intValue());
+        good.setPrice(((Long) good_map.get("price")).intValue());
         good_list.add(good);
       }
       sellrecord.setGood_list(good_list);

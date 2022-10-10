@@ -25,10 +25,9 @@ public class InRecordController {
       if (document.exists()) {
         InRecord inrecord = new InRecord();
         inrecord.setId(document.getString("id"));
-        inrecord.setGood_list((List<Good>)document.get("good_list"));
+        inrecord.setGood(document.get("good",Good.class));
         inrecord.setUser(document.get("user",User.class));
         inrecord.setTime(document.getString("time"));
-        inrecord.setStatus(document.getString("status"));
         inrecord_list.add(inrecord);
       }
     }
@@ -42,9 +41,7 @@ public class InRecordController {
     Firestore dbFirestore = FirestoreClient.getFirestore();
     ApiFuture<WriteResult> future = dbFirestore.collection("in_records").document(uuid_inrecord).set(inrecord);
     System.out.println("Update time : " + future.get().getUpdateTime());
-    for (Good good : inrecord.getGood_list()){
-      GoodController good_controller = new GoodController();
-      good_controller.increaseGoodQuantityById(good.getId(), good.getQuantity());
-    }
+    GoodController good_controller = new GoodController();
+    good_controller.increaseGoodQuantityById(inrecord.getGood().getId(), inrecord.getGood().getQuantity());
   }
 }

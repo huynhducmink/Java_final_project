@@ -72,7 +72,6 @@ public class CustomerController {
     customerdoc.put("name",newcustomer.getName());
     customerdoc.put("phone",newcustomer.getPhone());
     customerdoc.put("address",newcustomer.getAddress());
-    System.out.println(newcustomer.getId());
 
     Firestore dbFirestore = FirestoreClient.getFirestore();
     ApiFuture<WriteResult> future = dbFirestore.collection("customers").document(newcustomer.getId()).set(customerdoc);
@@ -85,7 +84,6 @@ public class CustomerController {
     customerdoc.put("name",newcustomer.getName());
     customerdoc.put("phone",newcustomer.getPhone());
     customerdoc.put("address",newcustomer.getAddress());
-    System.out.println(newcustomer.getId());
 
     Firestore dbFirestore = FirestoreClient.getFirestore();
     ApiFuture<WriteResult> future = dbFirestore.collection("customers").document(newcustomer.getId()).delete();

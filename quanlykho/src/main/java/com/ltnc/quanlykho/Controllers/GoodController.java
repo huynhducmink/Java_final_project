@@ -24,8 +24,10 @@ public class GoodController {
       if (document.exists()) {
         Good good = new Good();
         good.setId(document.getString("id"));
+        good.setShop_id(document.getString("shop_id"));
         good.setName(document.getString("name"));
         good.setQuantity(document.get("quantity",Integer.class));
+        good.setPrice(document.get("price",Integer.class));
         good_list.add(good);
       }
     }
@@ -63,5 +65,18 @@ public class GoodController {
       ApiFuture<WriteResult> future2 = dbFirestore.collection("goods").document(id).update("quantity",new_quantity);
       System.out.println("Update time : " + future2.get().getUpdateTime());
     }
+  }
+
+  public void editGood(Good newgood) throws ExecutionException, InterruptedException {
+    Firestore dbFirestore = FirestoreClient.getFirestore();
+    ApiFuture<WriteResult> future = dbFirestore.collection("goods").document(newgood.getId()).update(
+      "shop_id", newgood.getShop_id(),"name",newgood.getName(),"price",newgood.getPrice());
+    System.out.println("Update time : " + future.get().getUpdateTime());
+  }
+
+  public void deleteGood(Good newgood) throws ExecutionException, InterruptedException {
+    Firestore dbFirestore = FirestoreClient.getFirestore();
+    ApiFuture<WriteResult> future = dbFirestore.collection("goods").document(newgood.getId()).delete();
+    System.out.println("Update time : " + future.get().getUpdateTime());
   }
 }

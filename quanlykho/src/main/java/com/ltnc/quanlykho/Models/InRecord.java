@@ -1,24 +1,19 @@
 package com.ltnc.quanlykho.Models;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class InRecord {
   private String id;
-  private List<Good> good_list = new ArrayList<Good>();
-  private User user;
+  private Good good = new Good();
+  private User user = new User();
   private String time;
-  private String status;
 
   public InRecord() {
   }
 
-  public InRecord(String id, List<Good> good_list, User user, String time, String status) {
+  public InRecord(String id, Good good, User user, String time) {
     this.id = id;
-    this.good_list = good_list;
+    this.good = good;
     this.user = user;
     this.time = time;
-    this.status = status;
   }
 
   public String getId() {
@@ -29,12 +24,12 @@ public class InRecord {
     this.id = id;
   }
 
-  public List<Good> getGood_list() {
-    return this.good_list;
+  public Good getGood() {
+    return this.good;
   }
 
-  public void setGood_list(List<Good> good_list) {
-    this.good_list = good_list;
+  public void setGood(Good good) {
+    this.good = good;
   }
 
   public User getUser() {
@@ -53,21 +48,13 @@ public class InRecord {
     this.time = time;
   }
 
-  public String getStatus() {
-    return this.status;
-  }
-
-  public void setStatus(String status) {
-    this.status = status;
-  }
-
   public InRecord id(String id) {
     setId(id);
     return this;
   }
 
-  public InRecord good_list(List<Good> good_list) {
-    setGood_list(good_list);
+  public InRecord good(Good good) {
+    setGood(good);
     return this;
   }
 
@@ -81,19 +68,13 @@ public class InRecord {
     return this;
   }
 
-  public InRecord status(String status) {
-    setStatus(status);
-    return this;
-  }
-
   @Override
   public String toString() {
     return "{" +
       " id='" + getId() + "'" +
-      ", good_list='" + getGood_list() + "'" +
+      ", good='" + getGood() + "'" +
       ", user='" + getUser() + "'" +
       ", time='" + getTime() + "'" +
-      ", status='" + getStatus() + "'" +
       "}";
   }
 
