@@ -84,17 +84,17 @@ public class SellRecordController {
         sellrecordpending.setPrice(((Long)document.get("price")).intValue());
         sellrecordpending_list.add(sellrecordpending);
 
-        Boolean customer_exist = false;
-        CustomerController customer_controller = new CustomerController();
-        List<Customer> customer_list = customer_controller.getAllCustomers();
-        for (Customer customer : customer_list){
-          if (customer.getId().equals(sellrecordpending.getCustomer().getId())){
-            customer_exist = true;
-          }
-        }
-        if (!customer_exist){
-          customer_controller.createNewCustomer(sellrecordpending.getCustomer());
-        }
+        // Boolean customer_exist = false;
+        // CustomerController customer_controller = new CustomerController();
+        // List<Customer> customer_list = customer_controller.getAllCustomers();
+        // for (Customer customer : customer_list){
+        //   if (customer.getId().equals(sellrecordpending.getCustomer().getId())){
+        //     customer_exist = true;
+        //   }
+        // }
+        // if (!customer_exist){
+        //   customer_controller.createNewCustomer(sellrecordpending.getCustomer());
+        // }
       }
     }
     return sellrecordpending_list;
