@@ -24,6 +24,8 @@ public class CustomerController {
     List<Customer> customer_list = new ArrayList<Customer>();
     for (QueryDocumentSnapshot document : documents) {
       if (document.exists()) {
+        Integer doc_number = document.getData().size();
+        if (doc_number == 0){continue;}
         Customer customer = new Customer();
         customer.setId(document.getString("id"));
         customer.setName(document.getString("name"));
@@ -41,6 +43,8 @@ public class CustomerController {
     DocumentSnapshot document = future.get();
     Customer customer = new Customer();
     if (document.exists()) {
+      Integer doc_number = document.getData().size();
+      if (doc_number == 0){return customer;}
       customer.setId(document.getString("id"));
       customer.setName(document.getString("name"));
       customer.setPhone(document.getString("phone"));

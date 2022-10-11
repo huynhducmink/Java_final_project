@@ -22,6 +22,8 @@ public class GoodController {
     List<Good> good_list = new ArrayList<Good>();
     for (QueryDocumentSnapshot document : documents) {
       if (document.exists()) {
+        Integer doc_number = document.getData().size();
+        if (doc_number == 0){continue;}
         Good good = new Good();
         good.setId(document.getString("id"));
         good.setShop_id(document.getString("shop_id"));
@@ -45,7 +47,9 @@ public class GoodController {
   
   public void increaseGoodQuantityById(String id, Integer increase_amount) throws ExecutionException, InterruptedException {
     Firestore dbFirestore = FirestoreClient.getFirestore();
-    ApiFuture<DocumentSnapshot> future = dbFirestore.collection("goods").document(id).get();
+    String good_id = id;
+    if (id.equals(null)){good_id = "placeholderpath";}
+    ApiFuture<DocumentSnapshot> future = dbFirestore.collection("goods").document(good_id).get();
     DocumentSnapshot document = future.get();
     if (document.exists()) {
       Integer old_quantity = document.get("quantity",Integer.class);
@@ -57,7 +61,9 @@ public class GoodController {
 
   public void decreaseGoodQuantityById(String id, Integer decrease_amount) throws ExecutionException, InterruptedException {
     Firestore dbFirestore = FirestoreClient.getFirestore();
-    ApiFuture<DocumentSnapshot> future = dbFirestore.collection("goods").document(id).get();
+    String good_id = id;
+    if (id.equals(null)){good_id = "placeholderpath";}
+    ApiFuture<DocumentSnapshot> future = dbFirestore.collection("goods").document(good_id).get();
     DocumentSnapshot document = future.get();
     if (document.exists()) {
       Integer old_quantity = document.get("quantity",Integer.class);

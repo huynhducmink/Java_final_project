@@ -9,13 +9,13 @@ public class SellRecord {
   private User user;
   private Customer customer;
   private String time;
-  private String status; // create, delivering, reject
-  private String price;
+  private String status; // create, delivered, reject
+  private Integer price;
 
   public SellRecord() {
   }
 
-  public SellRecord(String id, List<Good> good_list, User user, Customer customer, String time, String status, String price) {
+  public SellRecord(String id, List<Good> good_list, User user, Customer customer, String time, String status, Integer price) {
     this.id = id;
     this.good_list = good_list;
     this.user = user;
@@ -73,11 +73,11 @@ public class SellRecord {
     this.status = status;
   }
 
-  public String getPrice() {
+  public Integer getPrice() {
     return this.price;
   }
 
-  public void setPrice(String price) {
+  public void setPrice(Integer price) {
     this.price = price;
   }
 
@@ -111,7 +111,7 @@ public class SellRecord {
     return this;
   }
 
-  public SellRecord price(String price) {
+  public SellRecord price(Integer price) {
     setPrice(price);
     return this;
   }

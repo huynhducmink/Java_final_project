@@ -1,5 +1,6 @@
 package com.ltnc.quanlykho.Controllers;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -20,12 +21,14 @@ import com.ltnc.quanlykho.Models.User;
 
 public class SellRecordController {
   public List<SellRecord> getAllDoneSellRecords() throws ExecutionException, InterruptedException {
+    List<SellRecord> sellrecorddone_list = new ArrayList<SellRecord>();
     Firestore dbFirestore = FirestoreClient.getFirestore();
     ApiFuture<QuerySnapshot> future = dbFirestore.collection("sell_records_done").get();
     List<QueryDocumentSnapshot> documents = future.get().getDocuments();
-    List<SellRecord> sellrecorddone_list = new ArrayList<SellRecord>();
     for (QueryDocumentSnapshot document : documents) {
       if (document.exists()) {
+        Integer doc_number = document.getData().size();
+        if (doc_number == 0){continue;}
         SellRecord sellrecorddone = new SellRecord();
         sellrecorddone.setId(document.getString("id"));
         List<Good> good_list = new ArrayList<Good>();
@@ -44,7 +47,7 @@ public class SellRecordController {
         sellrecorddone.setCustomer(document.get("customer",Customer.class));
         sellrecorddone.setTime(document.getString("time"));
         sellrecorddone.setStatus(document.getString("status"));
-        sellrecorddone.setPrice(document.getString("price"));
+        sellrecorddone.setPrice(((Long)document.get("price")).intValue());
         sellrecorddone_list.add(sellrecorddone);
       }
     }
@@ -58,6 +61,8 @@ public class SellRecordController {
     List<SellRecord> sellrecordpending_list = new ArrayList<SellRecord>();
     for (QueryDocumentSnapshot document : documents) {
       if (document.exists()) {
+        Integer doc_number = document.getData().size();
+        if (doc_number == 0){continue;}
         SellRecord sellrecordpending = new SellRecord();
         sellrecordpending.setId(document.getString("id"));
         List<Good> good_list = new ArrayList<Good>();
@@ -76,8 +81,20 @@ public class SellRecordController {
         sellrecordpending.setCustomer(document.get("customer",Customer.class));
         sellrecordpending.setTime(document.getString("time"));
         sellrecordpending.setStatus(document.getString("status"));
-        sellrecordpending.setPrice(document.getString("price"));
+        sellrecordpending.setPrice(((Long)document.get("price")).intValue());
         sellrecordpending_list.add(sellrecordpending);
+
+        Boolean customer_exist = false;
+        CustomerController customer_controller = new CustomerController();
+        List<Customer> customer_list = customer_controller.getAllCustomers();
+        for (Customer customer : customer_list){
+          if (customer.getId().equals(sellrecordpending.getCustomer().getId())){
+            customer_exist = true;
+          }
+        }
+        if (!customer_exist){
+          customer_controller.createNewCustomer(sellrecordpending.getCustomer());
+        }
       }
     }
     return sellrecordpending_list;
@@ -88,6 +105,12 @@ public class SellRecordController {
     String uuid_sellrecord = UUID.randomUUID().toString();
     sellrecord.setId(uuid_sellrecord);
     sellrecord.setStatus("pending");
+    Integer price = 0;
+    for (Good good : sellrecord.getGood_list()){
+      price += good.getPrice()*good.getQuantity();
+    }
+    sellrecord.setPrice(price);
+    sellrecord.setTime(new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date()));
     Firestore dbFirestore = FirestoreClient.getFirestore();
     ApiFuture<WriteResult> future = dbFirestore.collection("sell_records_pending").document(uuid_sellrecord).set(sellrecord);
     System.out.println("Update time : " + future.get().getUpdateTime());
@@ -118,7 +141,7 @@ public class SellRecordController {
       sellrecord.setCustomer(document.get("customer",Customer.class));
       sellrecord.setTime(document.getString("time"));
       sellrecord.setStatus(document.getString("status"));
-      sellrecord.setPrice(document.getString("price"));
+      sellrecord.setPrice(((Long)document.get("price")).intValue());
 
       // decrease good in stock
       GoodController good_controller = new GoodController();
@@ -161,7 +184,7 @@ public class SellRecordController {
       sellrecord.setCustomer(document.get("customer",Customer.class));
       sellrecord.setTime(document.getString("time"));
       sellrecord.setStatus(document.getString("status"));
-      sellrecord.setPrice(document.getString("price"));
+      sellrecord.setPrice(((Long)document.get("price")).intValue());
 
       // move sell record to done 
       sellrecord.setStatus("reject");

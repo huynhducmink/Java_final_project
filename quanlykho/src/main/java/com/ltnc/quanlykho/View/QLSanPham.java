@@ -4,7 +4,6 @@
  */
 package com.ltnc.quanlykho.View;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -513,7 +512,6 @@ public class QLSanPham extends javax.swing.JFrame {
         good = selected_good;
         good.setQuantity(increase);
         inrecord.setGood(good);
-        inrecord.setTime(new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date()));
         inrecord.setUser(Global.current_user);
         try {
           InRecordController inrecord_controller = new InRecordController();
@@ -547,7 +545,6 @@ public class QLSanPham extends javax.swing.JFrame {
         good = selected_good;
         good.setQuantity(decrease);
         outrecord.setGood(good);
-        outrecord.setTime(new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date()));
         outrecord.setUser(Global.current_user);
         try {
           OutRecordController outrecord_controller = new OutRecordController();

@@ -1,5 +1,6 @@
 package com.ltnc.quanlykho.Controllers;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -23,6 +24,8 @@ public class OutRecordController {
     List<OutRecord> outrecord_list = new ArrayList<OutRecord>();
     for (QueryDocumentSnapshot document : documents) {
       if (document.exists()) {
+        Integer doc_number = document.getData().size();
+        if (doc_number == 0){continue;}
         OutRecord outrecord = new OutRecord();
         outrecord.setId(document.getString("id"));
         outrecord.setGood(document.get("good",Good.class));
@@ -38,6 +41,7 @@ public class OutRecordController {
     OutRecord outrecord = newoutrecord;
     String uuid_outrecord = UUID.randomUUID().toString();
     outrecord.setId(uuid_outrecord);
+    outrecord.setTime(new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date()));
     Firestore dbFirestore = FirestoreClient.getFirestore();
     ApiFuture<WriteResult> future = dbFirestore.collection("out_records").document(uuid_outrecord).set(outrecord);
     System.out.println("Update time : " + future.get().getUpdateTime());

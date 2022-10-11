@@ -21,6 +21,8 @@ public class UserController {
     List<User> user_list = new ArrayList<User>();
     for (QueryDocumentSnapshot document : documents) {
       if (document.exists()) {
+        Integer doc_number = document.getData().size();
+        if (doc_number == 0){continue;}
         User user = new User();
         user.setId(document.getString("id"));
         user.setName(document.getString("name"));
