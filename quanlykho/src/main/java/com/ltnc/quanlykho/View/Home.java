@@ -4,8 +4,6 @@
  */
 package com.ltnc.quanlykho.View;
 
-import javax.swing.JOptionPane;
-
 /**
  *
  * @author Dung
@@ -176,10 +174,9 @@ public class Home extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        // this.dispose();
-        // QLCongViec cnDH = new QLCongViec();
-        // cnDH.setVisible(true);
-        JOptionPane.showMessageDialog(this, "Đăng nhập thành công");
+        this.dispose();
+        QLHoaDon qlHD = new QLHoaDon();
+        qlHD.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed

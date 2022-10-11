@@ -45,7 +45,6 @@ public class QLKhachHang extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnGioiTinh = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -292,7 +291,6 @@ public class QLKhachHang extends javax.swing.JFrame {
         System.out.println("error");
       }
       for (Customer customer : customer_list) {
-
         model.addRow(new Object[] {
             tableResult.getRowCount() + 1,
             customer.getName(),
@@ -534,7 +532,6 @@ public class QLKhachHang extends javax.swing.JFrame {
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEdit;
-    private javax.swing.ButtonGroup btnGioiTinh;
     private javax.swing.JButton btnRefresh;
     private javax.swing.JButton btnSearch;
     private javax.swing.JButton jButton1;
