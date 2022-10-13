@@ -67,13 +67,15 @@ public class QLDoanhThu extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
+        totalMoney = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Liberation Sans", 1, 24)); // NOI18N
         jLabel1.setText("Thống kê doanh thu");
 
-        jButton1.setText("Hóa đơn bán");
+        jButton1.setText("Hóa đơn bán hàng");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -145,6 +147,11 @@ public class QLDoanhThu extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Liberation Sans", 1, 24)); // NOI18N
         jLabel2.setText("Danh sách hàng hóa trong hóa đơn");
 
+        totalMoney.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
+
+        jLabel4.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
+        jLabel4.setText("Tổng doanh thu:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -167,36 +174,46 @@ public class QLDoanhThu extends javax.swing.JFrame {
                 .addContainerGap(524, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(409, 409, 409))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 505, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(242, 242, 242))))
+                        .addGap(242, 242, 242))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(413, 413, 413))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel4)
+                .addGap(18, 18, 18)
+                .addComponent(totalMoney)
+                .addGap(122, 122, 122))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(43, 43, 43)
+                        .addGap(83, 83, 83)
                         .addComponent(jButton1)
                         .addGap(18, 18, 18)
                         .addComponent(jButton2)
                         .addGap(18, 18, 18)
                         .addComponent(jButton3))
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
+                        .addGap(12, 12, 12)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(totalMoney))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 138, Short.MAX_VALUE)
                         .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(136, 136, 136))))
         );
@@ -279,10 +296,12 @@ public class QLDoanhThu extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
+    private javax.swing.JLabel totalMoney;
     // End of variables declaration//GEN-END:variables
 
     private void showTableDT() {
@@ -294,7 +313,9 @@ public class QLDoanhThu extends javax.swing.JFrame {
             // TODO Auto-generated catch block
             e.printStackTrace();
           }
+          Integer totalMoneycount = 0;
           for (SellRecord sellrecord : sellrecord_list) {
+            totalMoneycount += sellrecord.getPrice();
             List<Good> good_list = sellrecord.getGood_list();
             String good_string = "";
             for (Good good : good_list){
@@ -310,6 +331,7 @@ public class QLDoanhThu extends javax.swing.JFrame {
                 sellrecord.getPrice()
             });
           }
+          totalMoney.setText(totalMoneycount.toString());
         }
         if (mode.equals("in")) {
           try {
@@ -364,6 +386,7 @@ public class QLDoanhThu extends javax.swing.JFrame {
     }
 
     private void reset() {
+      totalMoney.setText("");
       sellrecord_list = new ArrayList<SellRecord>();
       inrecord_list = new ArrayList<InRecord>();
       outrecord_list = new ArrayList<OutRecord>();
