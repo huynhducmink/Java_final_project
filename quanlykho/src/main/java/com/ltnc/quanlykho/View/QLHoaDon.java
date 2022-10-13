@@ -470,11 +470,7 @@ public class QLHoaDon extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Chưa chọn khách hàng hoặc giỏ hàng đang trống!", "Lỗi", JOptionPane.WARNING_MESSAGE);
       }
       else{
-      Customer customer = new Customer();
-      customer.setName(jTextField1.getText());
-      customer.setPhone(txtSDT.getText());
-      customer.setAddress(jTextField2.getText());
-      SellRecord sellrecord = new SellRecord("",good_buy_list,Global.current_user,customer,"","",0);
+      SellRecord sellrecord = new SellRecord("",good_buy_list,Global.current_user,selected_customer,"","",0);
       try {
         sellrecord_controller.createNewSellRecord(sellrecord);
       } catch (ExecutionException | InterruptedException e) {

@@ -11,7 +11,10 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import com.ltnc.quanlykho.Controllers.CustomerController;
+import com.ltnc.quanlykho.Controllers.SellRecordController;
 import com.ltnc.quanlykho.Models.Customer;
+import com.ltnc.quanlykho.Models.Good;
+import com.ltnc.quanlykho.Models.SellRecord;
 
 /**
  *
@@ -24,7 +27,10 @@ public class QLKhachHang extends javax.swing.JFrame {
      */
     private CustomerController customer_controller = new CustomerController();
     private List<Customer> customer_list;
-    private DefaultTableModel model;
+    private SellRecordController sellrecord_controller = new SellRecordController();
+    private List<SellRecord> sellrecord_list;
+    private DefaultTableModel modelCustomer;
+    private DefaultTableModel modelSellrecord;
     private int index;
     private Customer selected_customer = new Customer();
 
@@ -32,8 +38,9 @@ public class QLKhachHang extends javax.swing.JFrame {
         initComponents();
 
         this.setLocationRelativeTo(null);
-        model = (DefaultTableModel) tableResult.getModel();
-        renderList();
+        modelCustomer = (DefaultTableModel) tableCustomer.getModel();
+        modelSellrecord = (DefaultTableModel) tableSellrecord.getModel();
+        renderCustomer();
     }
 
     /**
@@ -59,11 +66,14 @@ public class QLKhachHang extends javax.swing.JFrame {
         btnDelete = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tableResult = new javax.swing.JTable();
+        tableCustomer = new javax.swing.JTable();
         btnSearch = new javax.swing.JButton();
         txtSearch = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnExit = new javax.swing.JButton();
         btnRefresh = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tableSellrecord = new javax.swing.JTable();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Quản lý khách hàng");
@@ -178,35 +188,35 @@ public class QLKhachHang extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtDiaChi, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 145, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14))
         );
 
-        tableResult.setModel(new javax.swing.table.DefaultTableModel(
+        tableCustomer.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "STT", "Tên khách hàng", "Số điện thoại", "Địa chỉ"
+                "STT", "Mã khách hàng", "Tên khách hàng", "Số điện thoại", "Địa chỉ"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
         });
-        tableResult.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        tableResult.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        tableResult.addMouseListener(new java.awt.event.MouseAdapter() {
+        tableCustomer.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        tableCustomer.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tableCustomer.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tableResultClick(evt);
+                tableCustomerClick(evt);
             }
         });
-        jScrollPane1.setViewportView(tableResult);
+        jScrollPane1.setViewportView(tableCustomer);
 
         btnSearch.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("../Images/Search.png"))); // NOI18N
@@ -220,12 +230,12 @@ public class QLKhachHang extends javax.swing.JFrame {
 
         txtSearch.setToolTipText("Nhập Họ tên hoặc SĐT cần tìm kiếm!");
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("../Images/Exit.png"))); // NOI18N
-        jButton1.setText("THOÁT");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnExit.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("../Images/Exit.png"))); // NOI18N
+        btnExit.setText("THOÁT");
+        btnExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnExitActionPerformed(evt);
             }
         });
 
@@ -236,6 +246,27 @@ public class QLKhachHang extends javax.swing.JFrame {
                 refresh(evt);
             }
         });
+
+        tableSellrecord.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "STT", "Mã hóa đơn", "Danh sách hàng", "Thời gian", "Trạng thái", "Tổng giá"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(tableSellrecord);
+
+        jLabel3.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
+        jLabel3.setText("Lịch sử hóa đơn của khách hàng");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -248,18 +279,20 @@ public class QLKhachHang extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(btnExit)
                         .addGap(187, 187, 187)
                         .addComponent(btnRefresh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnSearch)
                         .addGap(10, 10, 10))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 932, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 932, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2)
+                    .addComponent(jLabel3)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -270,34 +303,65 @@ public class QLKhachHang extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(2, 2, 2)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1)
+                            .addComponent(btnExit)
                             .addComponent(btnRefresh)))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnSearch)
                         .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 421, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(8, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    private void renderList() {
-      model.setRowCount(0);
+    private void renderCustomer() {
+      modelCustomer.setRowCount(0);
       try {
         customer_list = customer_controller.getAllCustomers();
       } catch (ExecutionException | InterruptedException e) {
         System.out.println("error");
       }
       for (Customer customer : customer_list) {
-        model.addRow(new Object[] {
-            tableResult.getRowCount() + 1,
+        modelCustomer.addRow(new Object[] {
+            tableCustomer.getRowCount() + 1,
+            customer.getId(),
             customer.getName(),
             customer.getPhone(),
             customer.getAddress()
         });
+      }
+    }
+
+    private void renderGoods() {
+      modelSellrecord.setRowCount(0);
+      try {
+        sellrecord_list = sellrecord_controller.getAllDoneSellRecords();
+      } catch (ExecutionException | InterruptedException e) {
+        System.out.println("error");
+      }
+      for (SellRecord sellrecord : sellrecord_list) {
+        String good_list = "";
+        for (Good good : sellrecord.getGood_list()){
+          good_list = good_list +  good.getName() + ":" + good.getQuantity()+ " / " ;
+        }
+        if (sellrecord.getCustomer().getId().equals(selected_customer.getId())){
+          modelSellrecord.addRow(new Object[] {
+              tableSellrecord.getRowCount() + 1,
+              sellrecord.getId(),
+              good_list,
+              sellrecord.getTime(),
+              sellrecord.getStatus(),
+              sellrecord.getPrice()
+          });
+        }
       }
     }
 
@@ -307,36 +371,40 @@ public class QLKhachHang extends javax.swing.JFrame {
       txtSDT.setText("");
       txtDiaChi.setText("");
       txtSearch.setText("");
-      renderList();
+      renderCustomer();
+      modelSellrecord.setRowCount(0);
     }
 
-    private void tableResultClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableResultClick
+    private void tableCustomerClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableCustomerClick
         // TODO add your handling code here:
-        index = tableResult.getSelectedRow();
+        index = tableCustomer.getSelectedRow();
         Customer customer = customer_list.get(index);
         selected_customer = customer;
 
         txtTenKhachHang.setText(customer.getName());
         txtSDT.setText(customer.getPhone());
         txtDiaChi.setText(customer.getAddress());
+
+        renderGoods();
         
-    }//GEN-LAST:event_tableResultClick
+    }//GEN-LAST:event_tableCustomerClick
 
     private void search(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_search
       // // TODO add your handling code here:
       String find_text = txtSearch.getText();
 
       if (!(find_text.isBlank())) {
-        model.setRowCount(0);
+        modelCustomer.setRowCount(0);
         try {
           customer_list = customer_controller.getAllCustomers();
         } catch (ExecutionException | InterruptedException e) {
           System.out.println("error");
         }
         for (Customer customer : customer_list) {
-          if (customer.getName().contains(find_text)||customer.getPhone().contains(find_text)||customer.getAddress().contains(find_text)){
-            model.addRow(new Object[] {
-                tableResult.getRowCount() + 1,
+          if (customer.getId().contains(find_text)||customer.getName().contains(find_text)||customer.getPhone().contains(find_text)||customer.getAddress().contains(find_text)){
+            modelCustomer.addRow(new Object[] {
+                tableCustomer.getRowCount() + 1,
+                customer.getId(),
                 customer.getName(),
                 customer.getPhone(),
                 customer.getAddress()
@@ -349,12 +417,12 @@ public class QLKhachHang extends javax.swing.JFrame {
       }
     }                       
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
         // TODO add your handling code here:
         this.dispose();
         Home home = new Home();
         home.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnExitActionPerformed
 
     private void refresh(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refresh
         // TODO add your handling code here:
@@ -391,9 +459,6 @@ public class QLKhachHang extends javax.swing.JFrame {
       else{
         Customer customer = new Customer();
         customer = selected_customer;
-        customer.setName(txtTenKhachHang.getText());
-        customer.setAddress(txtDiaChi.getText());
-        customer.setPhone(txtSDT.getText());
         CustomerController customer_controller = new CustomerController();
         try {
           customer_controller.deleteCustomer(customer);
@@ -536,18 +601,21 @@ public class QLKhachHang extends javax.swing.JFrame {
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEdit;
+    private javax.swing.JButton btnExit;
     private javax.swing.ButtonGroup btnGioiTinh;
     private javax.swing.JButton btnRefresh;
     private javax.swing.JButton btnSearch;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tableResult;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable tableCustomer;
+    private javax.swing.JTable tableSellrecord;
     private javax.swing.JTextField txtDiaChi;
     private javax.swing.JTextField txtSDT;
     private javax.swing.JTextField txtSearch;

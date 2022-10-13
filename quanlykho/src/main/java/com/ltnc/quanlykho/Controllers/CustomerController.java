@@ -83,12 +83,6 @@ public class CustomerController {
   }
 
   public void deleteCustomer(Customer newcustomer) throws ExecutionException, InterruptedException {
-    Map<String,String> customerdoc = new HashMap<>();
-    customerdoc.put("id",newcustomer.getId());
-    customerdoc.put("name",newcustomer.getName());
-    customerdoc.put("phone",newcustomer.getPhone());
-    customerdoc.put("address",newcustomer.getAddress());
-
     Firestore dbFirestore = FirestoreClient.getFirestore();
     ApiFuture<WriteResult> future = dbFirestore.collection("customers").document(newcustomer.getId()).delete();
     System.out.println("Update time : " + future.get().getUpdateTime());
