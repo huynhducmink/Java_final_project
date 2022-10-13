@@ -45,7 +45,7 @@ public class QLDoanhThu extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         modelDT = (DefaultTableModel) jTable1.getModel();
         modelHD = (DefaultTableModel) jTable2.getModel();
-        showTableDT();
+        showTableDT("");
     }
 
     /**
@@ -69,6 +69,8 @@ public class QLDoanhThu extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         totalMoney = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        btnSearch = new javax.swing.JButton();
+        txtSearch = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -101,11 +103,11 @@ public class QLDoanhThu extends javax.swing.JFrame {
 
             },
             new String [] {
-                "STT", "Hàng hóa", "Người bán", "Người mua", "Giờ", "Trạng thái", "Đơn giá"
+                "STT", "Mã hóa đơn", "Hàng hóa", "Người bán", "Người mua", "Giờ", "Trạng thái", "Đơn giá"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -152,6 +154,18 @@ public class QLDoanhThu extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
         jLabel4.setText("Tổng doanh thu:");
 
+        btnSearch.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Search.png"))); // NOI18N
+        btnSearch.setText("Tìm kiếm");
+        btnSearch.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchsearch(evt);
+            }
+        });
+
+        txtSearch.setToolTipText("Nhập Họ tên hoặc SĐT cần tìm kiếm!");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -165,7 +179,7 @@ public class QLDoanhThu extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(19, 19, 19)
                         .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2)
                     .addComponent(jScrollPane1))
@@ -181,10 +195,17 @@ public class QLDoanhThu extends javax.swing.JFrame {
                         .addGap(413, 413, 413))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel4)
-                .addGap(18, 18, 18)
-                .addComponent(totalMoney)
-                .addGap(122, 122, 122))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(18, 18, 18)
+                        .addComponent(totalMoney)
+                        .addGap(122, 122, 122))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnSearch)
+                        .addGap(19, 19, 19))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -200,20 +221,24 @@ public class QLDoanhThu extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnSearch))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
                             .addComponent(totalMoney))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 138, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 118, Short.MAX_VALUE)
                         .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(136, 136, 136))))
         );
@@ -254,6 +279,11 @@ public class QLDoanhThu extends javax.swing.JFrame {
         home.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void btnSearchsearch(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchsearch
+        // TODO add your handling code here:
+        showTableDT(txtSearch.getText());
+    }//GEN-LAST:event_btnSearchsearch
+
     /**
      * @param args the command line arguments
      */
@@ -290,6 +320,7 @@ public class QLDoanhThu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnSearch;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -302,9 +333,10 @@ public class QLDoanhThu extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JLabel totalMoney;
+    private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
 
-    private void showTableDT() {
+    private void showTableDT(String search) {
         modelDT.setRowCount(0);
         if (mode.equals("sell")) {
           try {
@@ -316,20 +348,23 @@ public class QLDoanhThu extends javax.swing.JFrame {
           Integer totalMoneycount = 0;
           for (SellRecord sellrecord : sellrecord_list) {
             totalMoneycount += sellrecord.getPrice();
-            List<Good> good_list = sellrecord.getGood_list();
-            String good_string = "";
-            for (Good good : good_list){
-              good_string += good.getName().toString()+":"+good.getQuantity()+"\n";
+            if (sellrecord.getId().contains(search) || sellrecord.getCustomer().getName().contains(search) || sellrecord.getGood_list().toString().contains(search) || sellrecord.getUser().getName().contains(search)){
+              List<Good> good_list = sellrecord.getGood_list();
+              String good_string = "";
+              for (Good good : good_list) {
+                good_string += good.getName().toString() + ":" + good.getQuantity() + "\n";
+              }
+              modelDT.addRow(new Object[] {
+                  jTable1.getRowCount() + 1,
+                  sellrecord.getId(),
+                  good_string,
+                  sellrecord.getUser().getName(),
+                  sellrecord.getCustomer().getName(),
+                  sellrecord.getTime(),
+                  sellrecord.getStatus(),
+                  sellrecord.getPrice()
+              });
             }
-            modelDT.addRow(new Object[] {
-                jTable1.getRowCount() + 1,
-                good_string,
-                sellrecord.getUser().getName(),
-                sellrecord.getCustomer().getName(),
-                sellrecord.getTime(),
-                sellrecord.getStatus(),
-                sellrecord.getPrice()
-            });
           }
           totalMoney.setText(totalMoneycount.toString());
         }
@@ -341,13 +376,16 @@ public class QLDoanhThu extends javax.swing.JFrame {
             e.printStackTrace();
           }
           for (InRecord inrecord : inrecord_list) {
-            modelDT.addRow(new Object[] {
-                jTable1.getRowCount() + 1,
-                inrecord.getGood().getName()+":"+inrecord.getGood().getQuantity(),
-                inrecord.getUser().getName(),
-                "x",
-                inrecord.getTime()
-            });
+            if (inrecord.getId().contains(search) || inrecord.getUser().getName().contains(search)|| inrecord.getGood().getName().equals(search)){
+              modelDT.addRow(new Object[] {
+                  jTable1.getRowCount() + 1,
+                  inrecord.getId(),
+                  inrecord.getGood().getName() + ":" + inrecord.getGood().getQuantity(),
+                  inrecord.getUser().getName(),
+                  "",
+                  inrecord.getTime()
+              });
+            }
           }
         }
         if (mode.equals("out")) {
@@ -360,9 +398,10 @@ public class QLDoanhThu extends javax.swing.JFrame {
           for (OutRecord outrecord : outrecord_list) {
             modelDT.addRow(new Object[] {
                 jTable1.getRowCount() + 1,
+                outrecord.getId(),
                 outrecord.getGood().getName()+":"+outrecord.getGood().getQuantity(),
                 outrecord.getUser().getName(),
-                "x",
+                "",
                 outrecord.getTime()
             });
           }
@@ -387,11 +426,12 @@ public class QLDoanhThu extends javax.swing.JFrame {
 
     private void reset() {
       totalMoney.setText("");
+      txtSearch.setText("");
       sellrecord_list = new ArrayList<SellRecord>();
       inrecord_list = new ArrayList<InRecord>();
       outrecord_list = new ArrayList<OutRecord>();
       selected_sellrecord = new SellRecord();
-      showTableDT();
+      showTableDT("");
       modelHD.setRowCount(0);
     }
 }
