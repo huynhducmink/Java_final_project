@@ -11,7 +11,7 @@ import com.google.firebase.FirebaseOptions;
 public class DatabaseConnect {
   public void connect_to_database() {
     try {
-      InputStream serviceAccount = getClass().getResourceAsStream("serviceAccountKey.json");
+      InputStream serviceAccount = getClass().getResourceAsStream("/serviceAccountKey.json");
       FirebaseOptions options = FirebaseOptions.builder()
           .setCredentials(GoogleCredentials.fromStream(serviceAccount))
           .setDatabaseUrl("https://testing-project-01.firebaseio.com/")

@@ -70,13 +70,13 @@ public class Login extends javax.swing.JFrame {
         setTitle("Đăng nhập");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("../Images/Notes.png")));
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Notes.png")));
         jLabel1.setText("Shop management");
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("../Images/User.png"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/User.png"))); // NOI18N
         jLabel2.setText("Username");
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("../Images/Lock.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Lock.png"))); // NOI18N
         jLabel3.setText("Password");
 
         txtUser.addActionListener(new java.awt.event.ActionListener() {

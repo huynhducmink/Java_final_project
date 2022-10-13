@@ -12,6 +12,8 @@
     <exec.mainClass>com.ltnc.quanlykho.Quanlykho</exec.mainClass>
   </properties>
 
+
+
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -90,18 +92,31 @@
         <plugin>
           <artifactId>maven-assembly-plugin</artifactId>
           <configuration>
-            <archive>
-              <manifest>
-                <mainClass>fully.qualified.MainClass</mainClass>
-              </manifest>
-            </archive>
             <descriptorRefs>
               <descriptorRef>jar-with-dependencies</descriptorRef>
             </descriptorRefs>
+            <archive>
+              <manifest>
+                <mainClass>com.ltnc.quanlykho.Quanlykho</mainClass>
+              </manifest>
+            </archive>
           </configuration>
+          <executions>
+            <execution>
+              <phase>package</phase>
+              <goals>
+                <goal>single</goal>
+              </goals>
+            </execution>
+          </executions>
         </plugin>
       </plugins>
     </pluginManagement>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+      </resource>
+    </resources>
   </build>
 
 </project>
