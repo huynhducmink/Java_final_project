@@ -82,7 +82,7 @@ public class QLSanPham extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Quản lý sản phẩm");
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButton1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Log out.png"))); // NOI18N
         jButton1.setText("THOÁT");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -200,7 +200,7 @@ public class QLSanPham extends javax.swing.JFrame {
                 .addComponent(jLabel7)
                 .addGap(125, 125, 125)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         TableResultSP.setModel(new javax.swing.table.DefaultTableModel(
@@ -223,11 +223,11 @@ public class QLSanPham extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/rsz_shopping-bag.png"))); // NOI18N
-        jLabel1.setText("QUẢN LÝ KHO HÀNG");
+        jLabel1.setText("QUẢN LÝ SẢN PHẨM");
 
         txtFind.setToolTipText("Nhập tên hoặc mã sản phẩm để tìm kiếm\n");
 
-        btnFind.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnFind.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnFind.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Search.png"))); // NOI18N
         btnFind.setText("Tìm kiếm");
         btnFind.addActionListener(new java.awt.event.ActionListener() {
@@ -304,7 +304,7 @@ public class QLSanPham extends javax.swing.JFrame {
         );
 
         btnRefesh.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
-        btnRefesh.setText("Refesh");
+        btnRefesh.setText("Làm mới");
         btnRefesh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRefeshActionPerformed(evt);
@@ -343,8 +343,8 @@ public class QLSanPham extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(11, 11, 11)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtFind, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnFind)

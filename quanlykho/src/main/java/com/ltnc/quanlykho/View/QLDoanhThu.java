@@ -71,7 +71,7 @@ public class QLDoanhThu extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Liberation Sans", 1, 24)); // NOI18N
-        jLabel1.setText("Quản lý doanh thu");
+        jLabel1.setText("Thống kê doanh thu");
 
         jButton1.setText("Hóa đơn bán");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
